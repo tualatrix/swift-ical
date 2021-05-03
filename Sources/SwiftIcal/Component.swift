@@ -386,6 +386,8 @@ public struct VEvent {
 
     public var uid: String = UUID().uuidString
 
+    public var url: String?
+
     public var created: Date = Date()
 
     public var recurranceRule: RecurranceRule?
@@ -436,6 +438,10 @@ extension VEvent: LibicalComponentConvertible {
 
         if let organizer = organizer {
             icalcomponent_add_property(comp, organizer.libicalProperty())
+        }
+
+        if let url = url {
+            icalcomponent_add_property(comp, icalproperty_new_url(url))
         }
         return comp!
     }
